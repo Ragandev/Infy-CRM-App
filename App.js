@@ -57,15 +57,15 @@ const App = ({}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 25,
-    backgroundColor: "#fff",
+    // marginTop: 25,
+    // backgroundColor: "#fff",
     justifyContent: "center",
   },
   front: {
     height: '100%',
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgb(0, 81, 177)",
+    backgroundColor: "#fff",
   },
   crmLogo: {
     width:100,
