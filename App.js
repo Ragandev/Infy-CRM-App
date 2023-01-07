@@ -1,53 +1,21 @@
 import React from "react";
 import {useEffect, useState, useRef } from "react";
 import WebView from "react-native-webview";
-import { StyleSheet, View, BackHandler } from "react-native";
-// import { createStackContainer } from '@react-navigation/native';
-// import { createStackNavigator } from '@react-navigation/stack';
+import { StyleSheet, Text, Image, View, BackHandler, ActivityIndicator } from "react-native";
 
-// import NavigationView from "./NavigationView";
-
-const App = ({navigation}) => {
+const App = ({}) => {
 
   const webViewRef = useRef(null);
 
   const [canGoBack, setCanGoBack] = useState(false);
   const [canGoForward, setCanGoForward] = useState(false);
   const [currentUrl, setCurrentUrl] = useState('https://infygain.com/crm/');
-
-  
-
-  // BackButtonHandler = () => {
-  //   if (webviewRef.current){
-  //     // Alert("hello");
-  //     // webviewRef.current.goBack();
-  //     navigation.goBack();
-  //     return true;
-  //   }
-  // };\
-
-  // function runBack () {
-  //   navigation.goBack();
-  //   return true;
-  // }
-
-  
-
-  
-  
-  // const handleBackPress = () => {
-  //   webViewRef.current.goBack();
-  // }
-
-  // const handleForwardPress = () => {
-  //   webViewRef.current.goForward();
-  // } 
+  const [loading, setLoading] = useState(true);
 
   const backAction = () => {
     if(canGoBack){
       webViewRef.current.goBack();
     }else{
-      // navigation.goBack()
       BackHandler.exitApp();
       
     }
@@ -62,10 +30,19 @@ const App = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+
+{loading && (
+        <View style={styles.front}>
+          <Image style={styles.crmLogo} source={require('./assets/crmlogo.png')} />
+        </View>
+      )}
+      
+
       <WebView
         ref={webViewRef}
         source={{ uri: currentUrl }}
-        
+        onLoad={() => setLoading(false)}
+        onLoadEnd={() => setLoading(false)}
         
         onNavigationStateChange={navState => {
           setCanGoBack(navState.canGoBack);
@@ -73,7 +50,6 @@ const App = ({navigation}) => {
           setCurrentUrl(navState.url)
         }}
       />
-      {/* <NavigationView onBackPress =  {handleForwardPress} onForwardPress = {handleBackPress} /> */}
     </View>
   );
 };
@@ -85,6 +61,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     justifyContent: "center",
   },
+  front: {
+    height: '100%',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgb(0, 81, 177)",
+  },
+  crmLogo: {
+    width:100,
+    height:100,
+  }
 });
 
 
